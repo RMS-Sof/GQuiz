@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Knowledge Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .options button {
+            display: block;
+            width: 100%;
+            margin: 5px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        .options button:hover {
+            background-color: #0056b3;
+        }
+        #score-container {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        #exit {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>General Knowledge Quiz</h2>
+        <div id="question-container">
+            <p class="question"></p>
+            <div class="options"></div>
+        </div>
+        <div id="score-container"></div>
+        <button id="exit">Exit</button>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "Who won the FIFA World Cup 2022?", options: ["France", "Brazil", "Argentina", "Germany"], answer: "Argentina" },
+            { q: "Which country hosted the 2023 Cricket World Cup?", options: ["England", "India", "Australia", "South Africa"], answer: "India" },
+            { q: "What is the theme of the 2023 UN Climate Summit (COP28)?", options: ["Green Economy", "Net Zero Transition", "Unite for Climate Action", "Carbon Neutrality"], answer: "Unite for Climate Action" },
+            { q: "Which company became the world's most valuable in 2023?", options: ["Apple", "Microsoft", "Saudi Aramco", "Tesla"], answer: "Microsoft" },
+            { q: "Who won the Nobel Prize for Literature in 2023?", options: ["Annie Ernaux", "Jon Fosse", "Kazuo Ishiguro", "Olga Tokarczuk"], answer: "Jon Fosse" },
+	    { q: "What is the chemical symbol for gold?", options: ["Au", "Ag", "Fe"], answer: "Au" },
+            { q: "What is the speed of light in a vacuum?", options: ["299,792 km/s", "150,000 km/s", "1,080,000 km/s"], answer: "299,792 km/s" },
+            { q: "Who developed the theory of relativity?", options: ["Isaac Newton", "Albert Einstein", "Galileo Galilei"], answer: "Albert Einstein" },
+            { q: "Which gas do plants absorb from the atmosphere?", options: ["Oxygen", "Carbon Dioxide", "Nitrogen"], answer: "Carbon Dioxide" },
+            { q: "What is the powerhouse of the cell?", options: ["Nucleus", "Mitochondria", "Ribosome"], answer: "Mitochondria" },
+            { q: "Who invented the telephone?", options: ["Thomas Edison", "Alexander Graham Bell", "Nikola Tesla"], answer: "Alexander Graham Bell" },
+            { q: "What planet is known as the Red Planet?", options: ["Mars", "Jupiter", "Venus"], answer: "Mars" },
+            { q: "What is the main component of Earth's atmosphere?", options: ["Oxygen", "Nitrogen", "Carbon Dioxide"], answer: "Nitrogen" },
+            { q: "How many bones are in the adult human body?", options: ["206", "180", "220"], answer: "206" },
+            { q: "What is the hardest natural substance on Earth?", options: ["Iron", "Diamond", "Quartz"], answer: "Diamond" },
+            { q: "Who was the first President of the United States?", options: ["Abraham Lincoln", "George Washington", "Thomas Jefferson"], answer: "George Washington" },
+            { q: "Which continent is the largest by land area?", options: ["Africa", "Asia", "North America"], answer: "Asia" },
+            { q: "What year did World War II end?", options: ["1945", "1939", "1950"], answer: "1945" },
+            { q: "What is the capital of France?", options: ["Berlin", "Rome", "Paris"], answer: "Paris" },
+            { q: "Who built the Great Wall of China?", options: ["Qin Dynasty", "Ming Dynasty", "Han Dynasty"], answer: "Qin Dynasty" }
+            // Add 95+ more questions here...
+        ];
+
+        let score = 0;
+        let questionIndex = 0;
+        questions.sort(() => Math.random() - 0.5); // Randomize questions
+
+        function loadQuestion() {
+            if (questionIndex >= questions.length) {
+                document.getElementById("question-container").innerHTML = `<h3>Quiz Completed!</h3><p>Your final score: ${score}</p>`;
+                return;
+            }
+            const question = questions[questionIndex];
+            document.querySelector(".question").textContent = question.q;
+            const optionsDiv = document.querySelector(".options");
+            optionsDiv.innerHTML = "";
+            question.options.forEach(option => {
+                const button = document.createElement("button");
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option, question.answer);
+                optionsDiv.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selected, correct) {
+            if (selected === correct) score++;
+            questionIndex++;
+            loadQuestion();
+        }
+
+        document.getElementById("exit").onclick = () => {
+            if (confirm("Are you sure you want to quit?")) {
+                document.body.innerHTML = "<h2>Thank you for playing!</h2>";
+            }
+        };
+
+        loadQuestion();
+    </script>
+</body>
+</html>
